@@ -3,13 +3,14 @@ import './Modal.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
-const Modal = ({ isOpen, onClose, activeInput, setActiveInput }) => {
+const Modal = ({ isOpen, onClose, activeInput, setActiveInput, applyFilters }) => {
   const [adultCount, setAdultCount] = useState(0);
   const [childCount, setChildCount] = useState(0);
   const [totalGuests, setTotalGuests] = useState(0);
   const [stays, setStays] = useState([]);
   const [locations, setLocations] = useState([]);
-  const [filteredLocations, setFilteredLocations] = useState([]); // Estado para almacenar las ubicaciones filtradas
+  const [filteredLocations, setFilteredLocations] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState('');
 
   useEffect(() => {
     fetch('/stays.json')
@@ -28,38 +29,39 @@ const Modal = ({ isOpen, onClose, activeInput, setActiveInput }) => {
 
   const handleIncrementAdult = () => {
     setAdultCount(adultCount + 1);
-    resetLocationInput();
   };
 
   const handleDecrementAdult = () => {
     if (adultCount > 0) setAdultCount(adultCount - 1);
-    resetLocationInput();
   };
 
   const handleIncrementChild = () => {
     setChildCount(childCount + 1);
-    resetLocationInput();
   };
 
   const handleDecrementChild = () => {
     if (childCount > 0) setChildCount(childCount - 1);
-    resetLocationInput();
   };
 
-  const resetLocationInput = () => {
-    const locationInput = document.querySelector('.input-container-location input');
-    if (locationInput) {
-      locationInput.value = '';
-    }
-  };
-
-  // Función para filtrar ubicaciones según el texto del input
   const handleLocationFilter = (event) => {
     const searchText = event.target.value.toLowerCase();
     const filtered = locations.filter(location =>
       location.toLowerCase().includes(searchText)
     );
     setFilteredLocations(filtered);
+  };
+
+  const handleLocationSelect = (location) => {
+    setSelectedLocation(location);
+    const locationInput = document.querySelector('.input-container-location input');
+    if (locationInput) {
+      locationInput.value = location;
+    }
+  };
+
+  const handleApplyFilters = () => {
+    applyFilters(selectedLocation, totalGuests);
+    onClose();
   };
 
   if (!isOpen) return null;
@@ -73,7 +75,7 @@ const Modal = ({ isOpen, onClose, activeInput, setActiveInput }) => {
             <input
               type="text"
               placeholder="Helsinki, Finland"
-              onChange={handleLocationFilter} // Agregamos el evento onChange para filtrar las ubicaciones
+              onChange={handleLocationFilter}
             />
           </div>
           <div className={`input-container-guest ${totalGuests > 0 ? 'guests-selected' : ''}`} onClick={() => setActiveInput('guest')}>
@@ -83,7 +85,7 @@ const Modal = ({ isOpen, onClose, activeInput, setActiveInput }) => {
               placeholder={totalGuests > 0 ? `${totalGuests} Guests` : 'Add guests'}
             />
           </div>
-          <button>
+          <button onClick={handleApplyFilters}>
             <FontAwesomeIcon icon={faMagnifyingGlass} />
             <span>Search</span>
           </button>
@@ -91,7 +93,7 @@ const Modal = ({ isOpen, onClose, activeInput, setActiveInput }) => {
         {activeInput === 'location' ? (
           <ul className="location-list">
             {filteredLocations.map((location, index) => (
-              <li key={index}>
+              <li key={index} onClick={() => handleLocationSelect(location)}>
                 <FontAwesomeIcon icon={faLocationDot} />
                 {location}
               </li>

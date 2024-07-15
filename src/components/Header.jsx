@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import Modal from './Modal';
 
-const Header = () => {
+const Header = ({ applyFilters }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeInput, setActiveInput] = useState('');
 
@@ -35,7 +35,13 @@ const Header = () => {
           <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#eb5757" }} />
         </button>
       </div>
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal} activeInput={activeInput} setActiveInput={setActiveInput} />
+      <Modal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        activeInput={activeInput}
+        setActiveInput={setActiveInput}
+        applyFilters={applyFilters}
+      />
     </header>
   );
 };
