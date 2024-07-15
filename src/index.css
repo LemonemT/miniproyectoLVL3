@@ -1,0 +1,154 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: white;
+}
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.logo {
+  width: 100px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar input {
+  font-size: 14px;
+  width: 90px;
+  height: 30px;
+  padding: 10px;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 10px 0 0 10px;
+  outline: none;
+  background-color: white;
+  text-align: center;
+}
+
+.search-bar input:first-of-type {
+  letter-spacing: 0.4px;
+  width: 130px;
+  border-radius: 10px 0 0 10px;
+  color: #000000;
+}
+
+.search-bar input:last-of-type {
+  border-radius: 0;
+  color: #b0b0b0;
+}
+
+.search-bar button {
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+  background-color: white;
+  color: white;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 0 10px 10px 0;
+  cursor: pointer;
+  outline: none;
+}
+
+.search-bar button:focus {
+  outline: none;
+}
+
+.stays-list {
+  margin-top: 35px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+}
+
+.stays-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stays-count {
+  font-size: 16px;
+  color: #808080;
+}
+
+.stays-grid {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.2s;
+  font-family: 'Montserrat', sans-serif;
+  margin-right: 15px;
+  cursor: copy;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 25px;
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+
+}
+
+.superhost {
+  background-color: white;
+  color: rgba(79, 79, 79, 1);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  border: 1px solid rgba(79, 79, 79, 1);
+}
+
+.type {
+  font-size: 14px;
+  color: #777;
+}
+
+.rating {
+  font-size: 15px;
+  color: rgba(79, 79, 79, 1);
+  font-weight: 300;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+}
