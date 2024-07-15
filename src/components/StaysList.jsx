@@ -5,9 +5,19 @@ const StaysList = () => {
   const [stays, setStays] = useState([]);
 
   useEffect(() => {
-    fetch('/stays.json')
-      .then((response) => response.json())
-      .then((data) => setStays(data));
+    const fetchData = async () => {
+      const response = await fetch('/stays.json');
+      const data = await response.json();
+
+      const staysArray = [];
+      data.forEach(stay => {
+        staysArray.push(stay);
+      });
+
+      setStays(staysArray);
+    };
+
+    fetchData();
   }, []);
 
   return (

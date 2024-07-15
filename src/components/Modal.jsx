@@ -9,9 +9,9 @@ const Modal = ({ isOpen, onClose, activeInput, setActiveInput }) => {
   const [totalGuests, setTotalGuests] = useState(0);
   const [stays, setStays] = useState([]);
   const [locations, setLocations] = useState([]);
+  const [filteredLocations, setFilteredLocations] = useState([]); // Estado para almacenar las ubicaciones filtradas
 
   useEffect(() => {
-    // Fetching stays.json from the public folder
     fetch('/stays.json')
       .then(response => response.json())
       .then(data => {
@@ -53,6 +53,15 @@ const Modal = ({ isOpen, onClose, activeInput, setActiveInput }) => {
     }
   };
 
+  // Función para filtrar ubicaciones según el texto del input
+  const handleLocationFilter = (event) => {
+    const searchText = event.target.value.toLowerCase();
+    const filtered = locations.filter(location =>
+      location.toLowerCase().includes(searchText)
+    );
+    setFilteredLocations(filtered);
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -61,13 +70,18 @@ const Modal = ({ isOpen, onClose, activeInput, setActiveInput }) => {
         <div className="modal-search-bar">
           <div className="input-container-location" onClick={() => setActiveInput('location')}>
             <span className="static-text">LOCATION</span>
-            <input type="text" placeholder="Helsinki, Finland" />
+            <input
+              type="text"
+              placeholder="Helsinki, Finland"
+              onChange={handleLocationFilter} // Agregamos el evento onChange para filtrar las ubicaciones
+            />
           </div>
           <div className={`input-container-guest ${totalGuests > 0 ? 'guests-selected' : ''}`} onClick={() => setActiveInput('guest')}>
             <span className="static-text">GUESTS</span>
             <input
               type="text"
-              placeholder={totalGuests > 0 ? `${totalGuests} Guests` : 'Add guests'} />
+              placeholder={totalGuests > 0 ? `${totalGuests} Guests` : 'Add guests'}
+            />
           </div>
           <button>
             <FontAwesomeIcon icon={faMagnifyingGlass} />
@@ -76,7 +90,7 @@ const Modal = ({ isOpen, onClose, activeInput, setActiveInput }) => {
         </div>
         {activeInput === 'location' ? (
           <ul className="location-list">
-            {locations.map((location, index) => (
+            {filteredLocations.map((location, index) => (
               <li key={index}>
                 <FontAwesomeIcon icon={faLocationDot} />
                 {location}

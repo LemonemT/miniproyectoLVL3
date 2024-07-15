@@ -40,6 +40,7 @@ body {
 }
 
 .search-bar input:first-of-type {
+  
   letter-spacing: 0.4px;
   width: 130px;
   border-radius: 10px 0 0 10px;
